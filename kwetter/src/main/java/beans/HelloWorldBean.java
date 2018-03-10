@@ -25,6 +25,7 @@ public class HelloWorldBean implements Serializable{
     public void initialize() {
         helloes = new ArrayList<>();
         helloes.add(new HelloWorld(1));
+        helloes.add(new HelloWorld(2));
         System.out.println(HelloWorldBean.class.getSimpleName() + " was constructed");
     }
 
@@ -39,6 +40,19 @@ public class HelloWorldBean implements Serializable{
         HelloWorld helloWorld = new HelloWorld(hello);
         helloes.add(helloWorld);
         return helloWorld;
+    }
+
+    @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("delete/{helloId}/")
+    public List<HelloWorld> deleteHello(@PathParam("helloId") int hello) {
+        HelloWorld helloWorld = getHello(hello);
+        if(helloWorld == null) {
+            return null;
+        }else{
+            helloes.remove(helloWorld);
+        }
+        return helloes;
     }
 
     @POST
