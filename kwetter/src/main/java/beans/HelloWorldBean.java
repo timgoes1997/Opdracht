@@ -44,12 +44,17 @@ public class HelloWorldBean implements Serializable{
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Path("update/{helloId}/")
-    public HelloWorld updateHello(@PathParam("helloId") int hello) {
-        HelloWorld helloWorld = new HelloWorld(hello);
-        helloes.add(helloWorld);
+    public HelloWorld updateHello(@PathParam("helloId") int hello, @QueryParam("text") String text) {
+        HelloWorld helloWorld = getHello(hello);
+        if(helloWorld == null) {
+            helloWorld = new HelloWorld(hello);
+            helloWorld.setText(text);
+            helloes.add(helloWorld);
+        }else{
+            helloWorld.setText(text);
+        }
         return helloWorld;
     }
-
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
