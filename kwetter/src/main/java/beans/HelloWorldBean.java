@@ -3,22 +3,28 @@ package beans;
 import entity.HelloWorld;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @Path("hello")
-@RequestScoped
-public class HelloWorldBean {
+@SessionScoped
+public class HelloWorldBean implements Serializable{
     private String text = "Hello Relexed!";
+
+    private List<HelloWorld> helloes;
 
     @PostConstruct
     public void initialize() {
+        helloes = new ArrayList<>();
+        helloes.add(new HelloWorld(1));
         System.out.println(HelloWorldBean.class.getSimpleName() + " was constructed");
     }
 
@@ -26,11 +32,35 @@ public class HelloWorldBean {
         return text;
     }
 
+    @PUT
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("create/{helloId}/")
+    public HelloWorld createHello(@PathParam("helloId") int hello) {
+        HelloWorld helloWorld = new HelloWorld(hello);
+        helloes.add(helloWorld);
+        return helloWorld;
+    }
+
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("update/{helloId}/")
+    public HelloWorld updateHello(@PathParam("helloId") int hello) {
+        HelloWorld helloWorld = new HelloWorld(hello);
+        helloes.add(helloWorld);
+        return helloWorld;
+    }
+
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{helloId}/")
+    @Path("read/{helloId}/")
     public HelloWorld getHello(@PathParam("helloId") int hello) {
-        return new HelloWorld(hello);
+        for(HelloWorld h : helloes){
+            if(h.getHello() == hello){
+                return h;
+            }
+        }
+        return null;
     }
 
     /**
