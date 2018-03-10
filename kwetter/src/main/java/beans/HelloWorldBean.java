@@ -12,15 +12,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Named
-@Path("/hello")
+@Path("hello")
 @RequestScoped
 public class HelloWorldBean {
     private String text = "Hello Relexed!";
-    private HelloWorld world;
 
     @PostConstruct
     public void initialize() {
-        world = new HelloWorld(0);
         System.out.println(HelloWorldBean.class.getSimpleName() + " was constructed");
     }
 
@@ -32,6 +30,16 @@ public class HelloWorldBean {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{helloId}/")
     public HelloWorld getHello(@PathParam("helloId") int hello) {
-        return world;
+        return new HelloWorld(hello);
+    }
+
+    /**
+     * Retrieves representation of an instance of helloWorld.HelloWorld
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces("text/html")
+    public String getHtml() {
+        return "<html lang=\"en\"><body><h1>Hello, World!!</h1></body></html>";
     }
 }
