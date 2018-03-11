@@ -1,10 +1,8 @@
-package beans;
+package prototype.beans;
 
-import entity.HelloWorld;
+import prototype.entity.HelloWorld;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.ws.rs.*;
