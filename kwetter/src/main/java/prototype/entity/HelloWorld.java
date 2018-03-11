@@ -7,8 +7,17 @@ public class HelloWorld implements Serializable {
     private int hello;
     private String text;
 
+    public HelloWorld(){
+
+    }
+
     public HelloWorld(int hello){
         this.hello = hello;
+    }
+
+    public HelloWorld(int hello, String text){
+        this.hello = hello;
+        this.text = text;
     }
 
     public int getHello() {

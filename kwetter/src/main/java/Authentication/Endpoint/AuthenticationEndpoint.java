@@ -2,6 +2,8 @@ package Authentication.Endpoint;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.security.auth.login.LoginException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,6 +16,10 @@ import java.util.Random;
 @Path("auth")
 @RequestScoped
 public class AuthenticationEndpoint {
+
+    @PersistenceContext
+    EntityManager em;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

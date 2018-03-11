@@ -3,7 +3,9 @@ package prototype.web;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import prototype.entity.HelloWorld;
 
+import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -27,6 +29,9 @@ public class HelloWebTestTest {
     public void GetGreeting(){
         Response response = this.target.request().get();
         assertThat(response.getStatus(), is(200));
+        JsonObject hello = response.readEntity(JsonObject.class); //om een van der reden werkt deserialization van de HelloWorld.class zelf niet wat ik een beetje apart vind.
+        assertNotNull(hello);
+
     }
 
     @After
