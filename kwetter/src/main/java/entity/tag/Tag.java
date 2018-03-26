@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
-@Entity(name="TAGKANKERZOOI")
+@Entity(name="TAG")
 public class Tag implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
